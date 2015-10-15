@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# 功能： 在一个已有项目中新建一个近似于从零开始的分支。常用于github上的项目主页等。
+# 使用： git-newbranch.sh new_br_name
+# Todo:  如果$1值未定义，则提示要新建的分支名
+
+#if [ ! -x $1]
+#then
+	#echo "git-newbranch new_branch_name"
+	#exit 1
+#fi
+
+old_dir=`pwd`
+
+new_br_dir="/tmp/newbranch_dir"
+git init $new_br_dir
+cd $new_br_dir
+printf "new branch" > README.md
+git add README
+git commit -a -m "new branch init."
+
+cd $old_dir
+git fetch $new_br_dir
+git checkout -b $1 FETCH_HEAD
+#git push -u origin $1   # 推送到远端
+
